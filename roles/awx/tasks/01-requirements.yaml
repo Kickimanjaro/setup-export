@@ -1,0 +1,61 @@
+---
+# 2019-04-05
+# Vollmer
+# Install prerequisite packages for AWX
+# https://github.com/ansible/awx/blob/4.0.0/INSTALL.md
+# https://github.com/nodesource/distributions
+#   Ansible Requires Version 2.4+
+#   Docker
+#   docker-py Python module
+#   GNU Make
+#   Git Requires Version 1.8.4+
+#   Node 8.x LTS version
+#   NPM 6.x LTS
+
+- name: add the node repo
+  yum_repository:
+    name: node_repos
+    state: present
+    description: A description was required...
+    file: node_repos
+    baseurl: https://rpm.nodesource.com/pub_8.x/el/7/x86_64/
+    enabled: yes
+    sslverify: yes
+    gpgcheck: no
+  become: yes
+
+- name: install prerequisite packages
+  package:
+    name: "{{ item }}"
+  with_items:
+  - epel-release # required to install pip
+  - ansible
+  - docker
+#  - python-docker-py # conflicts with docker-compose
+  - make
+  - git
+  - nodejs # requires the node repo, includes npm 6
+  - python2-pip # required for pip module
+  - python-virtualenv # required for pip module
+  - python-setuptools # required for pip module
+  become: yes
+
+- name: install prerequisite python modules
+  pip:
+    name: "{{ item }}"
+  with_items:
+  - docker
+  - docker-compose
+#  - docker-py
+  become: yes
+
+- name: start the required services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+  - docker
+  become: yes
+
+...

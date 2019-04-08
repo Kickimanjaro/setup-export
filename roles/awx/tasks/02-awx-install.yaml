@@ -1,0 +1,22 @@
+---
+# 2019-04-05
+# Vollmer
+# Clone the AWX git repo and start the included installation playbook
+
+- name: clone the AWX git repo
+  git:
+    repo: "https://github.com/ansible/awx.git"
+    dest: /opt/awx-source
+    version: "{{ awx_version }}"
+    update: no
+  become: yes
+- name: install AWX
+  #include_playbook: /opt/awx-source/installer/install.yml
+  #delegate_to: inventory_hostname
+  #unable to include properly, might be worthwhile asking for help
+  command: ansible-playbook -i inventory install.yml
+  args:
+    chdir: /opt/awx-source/installer
+  become: yes
+
+...

@@ -1,0 +1,12 @@
+---
+# 2019-04-05
+# Vollmer
+# Playbook to configure a base RHEL 7 / CentOS 7 system as an AWX server
+
+- hosts: awx
+  remote_user: "{{ ssh_user }}"
+
+  roles:
+  - awx
+
+...

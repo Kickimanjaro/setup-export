@@ -1,0 +1,9 @@
+[all]
+192.168.1.231 # vollmer-target on home wifi
+
+[all:vars]
+ssh_user=vollmero
+awx_version=4.0.0
+
+[awx]
+192.168.1.233 # vollmer-awx-4.0.0 on home wifi

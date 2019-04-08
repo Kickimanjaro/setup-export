@@ -1,0 +1,14 @@
+---
+# 2019-04-05
+# Vollmer
+# Prepare to install AWX
+
+- name: install prerequisite packages
+  include_tasks: 01-requirements.yaml
+- name: install AWX
+  include_tasks: 02-awx-install.yaml
+#- name: halp
+#  include_playbook: /opt/awx-source/install/install.yml
+#  delegate_to: inventory_hostname
+
+...
